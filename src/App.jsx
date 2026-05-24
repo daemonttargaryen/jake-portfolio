@@ -4,7 +4,7 @@ import { ExternalLink, Code2, Globe, Smartphone, ChevronDown, Send, MapPin, Chec
 const ACCENT = "#3B82F6";
 const ACCENT_DIM = "#1D4ED8";
 
-const NAV_LINKS = ["about", "services", "work", "contact"];
+const NAV_LINKS = ["about", "services", "pricing", "work", "contact"];
 
 const SERVICES = [
   { icon: Globe, title: "Business websites", desc: "Clean, fast, professional sites for local businesses. Home, about, services, contact; everything you need to get found online.", price: "From €500" },
@@ -16,9 +16,9 @@ const SERVICES = [
 ];
 
 const PROJECTS = [
-  { title: "Forn", category: "Web", tag: "Restaurant", desc: "Full website for an Mdina restaurant. About Us, Menu, Reservations, and Contact Us on one page. ", tech: ["React", "Tailwind", "Firebase"] },
-  { title: "Forme Salon", category: "Web", tag: "Salon", desc: "Booking-enabled site for a Sliema beauty salon. Online appointments, services, and photo gallery.", tech: ["Next.js", "Vercel", "Calendly"] },
-  { title: "Casa Bajda", category: "Web", tag: "Hospitality", desc: "Accommodation site with room listings, availability info, and direct booking enquiry form.", tech: ["React", "Firebase", "Maps API"] },
+  { title: "Forn", category: "Web", tag: "Restaurant", desc: "Full website for an Mdina restaurant. About Us, Menu, Reservations, and Contact Us on one page. ", tech: ["React", "Tailwind", "Firebase"], liveUrl: "https://bella-vista-bay.vercel.app/", codeUrl: "https://github.com/daemonttargaryen/bella-vista" },
+  { title: "Forme Studio", category: "Web", tag: "Salon", desc: "Booking-enabled site for a Sliema beauty salon. Online appointments, services, and photo gallery.", tech: ["Next.js", "Vercel", "Calendly"], liveUrl: "https://forme-studio-rho.vercel.app/", codeUrl: "https://github.com/daemonttargaryen/forme-studio" },
+  { title: "Casa Bajda", category: "Web", tag: "Hospitality", desc: "Accommodation site with room listings, availability info, and direct booking enquiry form.", tech: ["React", "Firebase", "Maps API"], liveUrl: "https://casa-bajda.vercel.app/", codeUrl: "https://github.com/daemonttargaryen/casa-bajda" },
 ];
 
 const WHY = [
@@ -31,7 +31,71 @@ const WHY = [
 const FILTERS = ["All", "Web", "Mobile", "Design"];
 
 const SOCIAL_LINKS = [
-  { href: "mailto:jake@email.com", label: "Email", text: "✉" },
+  { href: "mailto:immortalsreign@gmail.com", label: "Email", text: "✉" },
+];
+
+const TIERS = [
+  {
+    name: "Starter", price: "€500",
+    desc: "Everything a small business needs to get online. Clean, fast, professional.",
+    features: ["Single-page website", "Mobile-ready design", "Contact form", "Google Maps embed", "Hosted & live in 7 days"],
+    note: null,
+  },
+  {
+    name: "Standard", price: "€800",
+    desc: "More content, more sections, more features. Ideal for salons, studios, and service businesses.",
+    features: ["Multi-section site (3 pages)", "Booking / enquiry form", "Services & pricing page", "Testimonials section", "SEO basics included"],
+    note: "Most popular",
+  },
+  {
+    name: "Premium", price: "€1,200+",
+    desc: "A full website with multiple pages, rich content, and everything a hospitality or retail business needs.",
+    features: ["Full multi-page site (5+ pages)", "Room / product listings", "FAQ & location pages", "Advanced contact & booking", "Full SEO & analytics setup"],
+    note: "Best value",
+  },
+];
+
+const ADDONS = [
+  {
+    category: "Communication",
+    items: [
+      { name: "WhatsApp click-to-chat", desc: "A floating button that opens a WhatsApp conversation instantly.", price: "€40" },
+      { name: "AI chatbot", desc: "Answers common questions automatically — hours, pricing, location.", price: "€250" },
+      { name: "Newsletter signup", desc: "Mailchimp-connected signup form to build your mailing list.", price: "€80" },
+    ],
+  },
+  {
+    category: "Bookings & Reservations",
+    items: [
+      { name: "Appointment booking system", desc: "Online booking via Calendly or a custom form. Ideal for salons and clinics.", price: "€150" },
+      { name: "Availability calendar", desc: "Live calendar showing available dates. Perfect for guesthouses and rentals.", price: "€200" },
+    ],
+  },
+  {
+    category: "Content & Media",
+    items: [
+      { name: "Photo gallery", desc: "Lightbox gallery with smooth transitions. Upload your own photos anytime.", price: "€75" },
+      { name: "Blog / news section", desc: "Post updates, news, or articles. Great for SEO and keeping your site fresh.", price: "€120" },
+      { name: "Instagram feed embed", desc: "Your latest Instagram posts displayed automatically on your site.", price: "€60" },
+      { name: "Online menu with PDF download", desc: "A styled digital menu with a download button. Restaurants and cafés.", price: "€80" },
+    ],
+  },
+  {
+    category: "Visibility & Analytics",
+    items: [
+      { name: "Google Maps integration", desc: "Interactive map with a Directions button linking straight to Google Maps.", price: "€50" },
+      { name: "Google Analytics setup", desc: "See how many people visit your site, where they come from, and what they click.", price: "€50" },
+      { name: "SEO optimisation", desc: "Meta titles, descriptions, image compression, sitemap — so Google finds you.", price: "€120" },
+    ],
+  },
+  {
+    category: "Compliance & Advanced",
+    items: [
+      { name: "Cookie consent banner", desc: "GDPR-compliant cookie notice. Legally required for all websites.", price: "€50" },
+      { name: "Multi-language toggle", desc: "Switch between English and Maltese. Great for tourist-facing businesses.", price: "€150" },
+      { name: "Advanced search", desc: "Autocomplete search with filters. For sites with large menus or catalogues.", price: "€200" },
+    ],
+  },
 ];
 
 export default function Portfolio() {
@@ -48,6 +112,7 @@ export default function Portfolio() {
   const animFrameRef = useRef(null);
   const ctaBtnRef = useRef(null);
   const [ctaOffset, setCtaOffset] = useState({ x: 0, y: 0 });
+  const [openAddon, setOpenAddon] = useState(null);
 
   useEffect(() => {
     setTimeout(() => setHeroVisible(true), 100);
@@ -349,6 +414,79 @@ export default function Portfolio() {
           </div>
         </div>
       </section>
+
+<section id="pricing" style={{ padding: "6rem 2rem", position: "relative", zIndex: 1 }}>
+  <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+    <SectionLabel text="pricing" />
+    <h2 style={{ fontSize: "clamp(26px, 3.5vw, 36px)", fontWeight: 600, letterSpacing: "-0.03em", marginBottom: "0.75rem" }}>Simple, honest pricing</h2>
+    <p style={{ color: "#71717a", marginBottom: "3rem", fontWeight: 300 }}>Three tiers to suit any business. Every site can be extended with add-ons.</p>
+
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "16px", marginBottom: "4rem" }}>
+      {TIERS.map(({ name, price, desc, features, note }) => (
+        <div key={name} style={{
+          background: note === "Most popular" ? "rgba(59,130,246,0.06)" : "rgba(255,255,255,0.02)",
+          border: `1px solid ${note === "Most popular" ? "rgba(59,130,246,0.35)" : "rgba(255,255,255,0.07)"}`,
+          borderRadius: "12px", padding: "1.75rem", position: "relative",
+        }}>
+          {note && (
+            <span style={{ position: "absolute", top: "-12px", left: "1.5rem", background: ACCENT, color: "#fff", fontSize: "11px", padding: "3px 10px", borderRadius: "100px", fontFamily: "'DM Mono', monospace", letterSpacing: "0.06em" }}>{note}</span>
+          )}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1rem" }}>
+            <h3 style={{ fontSize: "16px", fontWeight: 600 }}>{name}</h3>
+            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "18px", color: ACCENT, fontWeight: 500 }}>{price}</span>
+          </div>
+          <p style={{ fontSize: "13px", color: "#71717a", lineHeight: 1.65, marginBottom: "1.5rem" }}>{desc}</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            {features.map(f => (
+              <div key={f} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span style={{ color: ACCENT, fontSize: "14px" }}>✓</span>
+                <span style={{ fontSize: "13px", color: "#a1a1aa" }}>{f}</span>
+              </div>
+            ))}
+          </div>
+          <button onClick={() => scrollTo("contact")} style={{
+            marginTop: "1.75rem", width: "100%", background: note === "Most popular" ? ACCENT : "rgba(255,255,255,0.05)",
+            color: "#fff", border: `1px solid ${note === "Most popular" ? ACCENT : "rgba(255,255,255,0.1)"}`,
+            borderRadius: "8px", padding: "11px", fontSize: "13px", cursor: "pointer", fontFamily: "inherit", fontWeight: 500,
+          }}>Get a quote</button>
+        </div>
+      ))}
+    </div>
+
+    <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "3rem" }}>
+      <h3 style={{ fontSize: "clamp(20px, 2.5vw, 26px)", fontWeight: 600, letterSpacing: "-0.02em", marginBottom: "0.5rem" }}>Add-ons & extras</h3>
+      <p style={{ fontSize: "13px", color: "#71717a", fontWeight: 300, marginBottom: "2rem" }}>Extend any site with the features your business actually needs.</p>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {ADDONS.map(({ category, items }) => (
+          <div key={category} style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            <button onClick={() => setOpenAddon(openAddon === category ? null : category)} style={{
+              width: "100%", background: "none", border: "none", color: "#fafafa", cursor: "pointer",
+              padding: "1.25rem 0", display: "flex", justifyContent: "space-between", alignItems: "center",
+              fontFamily: "inherit", fontSize: "14px", fontWeight: 500,
+            }}>
+              <span>{category}</span>
+              <span style={{ color: ACCENT, fontSize: "20px", transition: "transform 0.25s", transform: openAddon === category ? "rotate(45deg)" : "rotate(0deg)", display: "inline-block", lineHeight: 1 }}>+</span>
+            </button>
+            {openAddon === category && (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "12px", paddingBottom: "1.5rem" }}>
+                {items.map(({ name, desc, price }) => (
+                  <div key={name} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "10px", padding: "1.25rem" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
+                      <span style={{ fontSize: "13px", fontWeight: 500, color: "#fafafa" }}>{name}</span>
+                      <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "12px", color: ACCENT, flexShrink: 0, marginLeft: "1rem" }}>{price}</span>
+                    </div>
+                    <p style={{ fontSize: "12px", color: "#71717a", lineHeight: 1.6 }}>{desc}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }} />
+      </div>
+    </div>
+  </div>
+</section>
 
       <section id="work" style={{ padding: "6rem 2rem", position: "relative", zIndex: 1, maxWidth: "1100px", margin: "0 auto" }}>
         <SectionLabel text="work" />
