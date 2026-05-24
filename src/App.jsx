@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { ExternalLink, Code2, Globe, Smartphone, ChevronDown, Send, MapPin, CheckCircle, AlertCircle, Menu, X, Zap, Shield, Clock, Star } from "lucide-react";
+import { useForm, ValidationError } from '@formspree/react';
 
 const ACCENT = "#3B82F6";
 const ACCENT_DIM = "#1D4ED8";
@@ -101,8 +102,7 @@ const ADDONS = [
 export default function Portfolio() {
   const [filter, setFilter] = useState("All");
   const [expandedProject, setExpandedProject] = useState(null);
-  const [formData, setFormData] = useState({ name: "", email: "", business: "", message: "" });
-  const [formState, setFormState] = useState({ errors: {}, submitted: false, submitting: false });
+  const [formspree, handleFormspreeSubmit] = useForm("xkoevnbk");
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -201,23 +201,6 @@ export default function Portfolio() {
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
-  };
-
-  const validate = () => {
-    const errors = {};
-    if (!formData.name.trim()) errors.name = "Name is required";
-    if (!formData.email.trim()) errors.email = "Email is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = "Enter a valid email";
-    if (!formData.message.trim()) errors.message = "Message is required";
-    return errors;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const errors = validate();
-    if (Object.keys(errors).length) { setFormState({ ...formState, errors }); return; }
-    setFormState({ ...formState, submitting: true, errors: {} });
-    setTimeout(() => setFormState({ errors: {}, submitted: true, submitting: false }), 1500);
   };
 
   const filtered = filter === "All" ? PROJECTS : PROJECTS.filter((p) => p.category === filter);
@@ -540,60 +523,48 @@ export default function Portfolio() {
           <h2 style={{ fontSize: "clamp(26px, 3.5vw, 36px)", fontWeight: 600, letterSpacing: "-0.03em", marginBottom: "0.75rem" }}>Let's talk</h2>
           <p style={{ color: "#71717a", marginBottom: "2.5rem", fontWeight: 300 }}>Tell me about your business and what you need. I'll get back to you within 24 hours, with no commitment required.</p>
 
-          {formState.submitted ? (
-            <div style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.25)", borderRadius: "12px", padding: "2rem", textAlign: "center" }}>
-              <CheckCircle size={32} style={{ color: "#10B981", margin: "0 auto 1rem" }} />
-              <p style={{ fontWeight: 500, marginBottom: "6px" }}>Message sent!</p>
-              <p style={{ fontSize: "14px", color: "#71717a" }}>I'll be in touch within 24 hours.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              {[
-                { id: "name", label: "Your name", type: "text", placeholder: "Maria Borg" },
-                { id: "email", label: "Email address", type: "email", placeholder: "maria@example.com" },
-                { id: "business", label: "Business name (optional)", type: "text", placeholder: "Bella Vista Restaurant" },
-              ].map(({ id, label, type, placeholder }) => (
-                <div key={id}>
-                  <label style={{ fontSize: "13px", color: "#a1a1aa", display: "block", marginBottom: "6px" }}>{label}</label>
-                  <input
-                    type={type} placeholder={placeholder}
-                    value={formData[id]}
-                    onChange={e => { setFormData({ ...formData, [id]: e.target.value }); setFormState(s => ({ ...s, errors: { ...s.errors, [id]: "" } })); }}
-                    className={formState.errors[id] ? "shake" : ""}
-                    style={{
-                      width: "100%", background: "rgba(255,255,255,0.03)",
-                      border: `1px solid ${formState.errors[id] ? "#EF4444" : formData[id] && id === "email" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData[id]) ? "#10B981" : "rgba(255,255,255,0.1)"}`,
-                      borderRadius: "8px", padding: "11px 14px", color: "#fafafa", fontSize: "14px", fontFamily: "inherit"
-                    }} />
-                  {formState.errors[id] && <p style={{ fontSize: "12px", color: "#EF4444", marginTop: "5px", display: "flex", alignItems: "center", gap: "4px" }}><AlertCircle size={12} />{formState.errors[id]}</p>}
-                </div>
-              ))}
-              <div>
-                <label style={{ fontSize: "13px", color: "#a1a1aa", display: "block", marginBottom: "6px" }}>Message</label>
-                <textarea
-                  rows={4} placeholder="Tell me about your business and what you're looking for..."
-                  value={formData.message}
-                  onChange={e => { setFormData({ ...formData, message: e.target.value }); setFormState(s => ({ ...s, errors: { ...s.errors, message: "" } })); }}
-                  className={formState.errors.message ? "shake" : ""}
-                  style={{
-                    width: "100%", background: "rgba(255,255,255,0.03)", resize: "vertical",
-                    border: `1px solid ${formState.errors.message ? "#EF4444" : "rgba(255,255,255,0.1)"}`,
-                    borderRadius: "8px", padding: "11px 14px", color: "#fafafa", fontSize: "14px", fontFamily: "inherit"
-                  }} />
-                {formState.errors.message && <p style={{ fontSize: "12px", color: "#EF4444", marginTop: "5px", display: "flex", alignItems: "center", gap: "4px" }}><AlertCircle size={12} />{formState.errors.message}</p>}
-              </div>
-              <button type="submit" disabled={formState.submitting} style={{
-                background: ACCENT, color: "#fff", border: "none",
-                padding: "13px", borderRadius: "8px", fontSize: "15px",
-                cursor: formState.submitting ? "wait" : "pointer", fontFamily: "inherit", fontWeight: 500,
-                display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-                opacity: formState.submitting ? 0.7 : 1, transition: "opacity 0.2s"
-              }}>
-                <Send size={16} />
-                {formState.submitting ? "Sending..." : "Send message"}
-              </button>
-            </form>
-          )}
+    {formspree.succeeded ? (
+  <div style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.25)", borderRadius: "12px", padding: "2rem", textAlign: "center" }}>
+    <CheckCircle size={32} style={{ color: "#10B981", margin: "0 auto 1rem", display: "block" }} />
+    <p style={{ fontWeight: 500, marginBottom: "6px" }}>Message sent!</p>
+    <p style={{ fontSize: "14px", color: "#71717a" }}>I'll be in touch within 24 hours.</p>
+  </div>
+) : (
+  <form onSubmit={handleFormspreeSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+    <div>
+      <label style={{ fontSize: "13px", color: "#a1a1aa", display: "block", marginBottom: "6px" }}>Your name</label>
+      <input type="text" name="name" placeholder="Maria Borg" required
+        style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "11px 14px", color: "#fafafa", fontSize: "14px", fontFamily: "inherit" }} />
+      <ValidationError field="name" errors={formspree.errors} style={{ fontSize: "12px", color: "#EF4444", marginTop: "5px", display: "block" }} />
+    </div>
+    <div>
+      <label style={{ fontSize: "13px", color: "#a1a1aa", display: "block", marginBottom: "6px" }}>Email address</label>
+      <input type="email" name="email" placeholder="maria@example.com" required
+        style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "11px 14px", color: "#fafafa", fontSize: "14px", fontFamily: "inherit" }} />
+      <ValidationError field="email" errors={formspree.errors} style={{ fontSize: "12px", color: "#EF4444", marginTop: "5px", display: "block" }} />
+    </div>
+    <div>
+      <label style={{ fontSize: "13px", color: "#a1a1aa", display: "block", marginBottom: "6px" }}>Business name (optional)</label>
+      <input type="text" name="business" placeholder="Bella Vista Restaurant"
+        style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "11px 14px", color: "#fafafa", fontSize: "14px", fontFamily: "inherit" }} />
+    </div>
+    <div>
+      <label style={{ fontSize: "13px", color: "#a1a1aa", display: "block", marginBottom: "6px" }}>Message</label>
+      <textarea name="message" rows={4} placeholder="Tell me about your business and what you're looking for..." required
+        style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "11px 14px", color: "#fafafa", fontSize: "14px", fontFamily: "inherit", resize: "vertical" }} />
+      <ValidationError field="message" errors={formspree.errors} style={{ fontSize: "12px", color: "#EF4444", marginTop: "5px", display: "block" }} />
+    </div>
+    <button type="submit" disabled={formspree.submitting} style={{
+      background: ACCENT, color: "#fff", border: "none", padding: "13px", borderRadius: "8px",
+      fontSize: "15px", cursor: formspree.submitting ? "wait" : "pointer", fontFamily: "inherit",
+      fontWeight: 500, display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+      opacity: formspree.submitting ? 0.7 : 1, transition: "opacity 0.2s"
+    }}>
+      <Send size={16} />
+      {formspree.submitting ? "Sending..." : "Send message"}
+    </button>
+  </form>
+)}
         </div>
       </section>
 
