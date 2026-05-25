@@ -7,7 +7,7 @@ const ACCENT = "#3B82F6";
 const NAV_LINKS = ["about", "services", "pricing", "work", "faq", "contact"];
 
 const SERVICES = [
-  { icon: Globe, title: "Business websites", desc: "Clean, fast, professional sites for local businesses. Home, about, services, contact; everything you need to get found online.", price: "From €500" },
+  { icon: Globe, title: "Business websites", desc: "Clean, fast, professional sites. Home, about, services, contact; everything you need to get found online.", price: "From €500" },
   { icon: Smartphone, title: "Mobile-ready design", desc: "Every site works flawlessly on phones and tablets. Over 60% of your customers will visit on mobile; it has to be perfect.", price: "Included" },
   { icon: Zap, title: "Fast turnaround", desc: "Most sites are live within 7 days. No waiting weeks for an agency to get back to you. Fast, direct, efficient.", price: "~7 days" },
   { icon: Shield, title: "Monthly maintenance", desc: "Ongoing support, updates, and fixes handled for you every month. Your site stays fresh without you lifting a finger.", price: "From €40/mo" },
@@ -16,13 +16,13 @@ const SERVICES = [
 ];
 
 const PROJECTS = [
-  { title: "Forn", category: "Web", tag: "Restaurant", desc: "Full website for an Mdina restaurant. About Us, Menu, Reservations, and Contact Us on one page.", tech: ["HTML", "CSS", "Vercel"], liveUrl: "https://bella-vista-bay.vercel.app/", codeUrl: "https://github.com/daemonttargaryen/bella-vista" },
-  { title: "Forme Studio", category: "Web", tag: "Salon", desc: "Booking-enabled site for a Sliema beauty salon. Online appointments, services, and photo gallery.", tech: ["HTML", "CSS", "Vercel"], liveUrl: "https://forme-studio-rho.vercel.app/", codeUrl: "https://github.com/daemonttargaryen/forme-studio" },
+  { title: "Forn", category: "Web", tag: "Restaurant", desc: "Full website for a restaurant. About Us, Menu, Reservations, and Contact Us on one page.", tech: ["HTML", "CSS", "Vercel"], liveUrl: "https://bella-vista-bay.vercel.app/", codeUrl: "https://github.com/daemonttargaryen/bella-vista" },
+  { title: "Forme Studio", category: "Web", tag: "Salon", desc: "Booking-enabled site for a beauty salon. Online appointments, services, and photo gallery.", tech: ["HTML", "CSS", "Vercel"], liveUrl: "https://forme-studio-rho.vercel.app/", codeUrl: "https://github.com/daemonttargaryen/forme-studio" },
   { title: "Casa Bajda", category: "Web", tag: "Hospitality", desc: "Accommodation site with room listings, availability info, and direct booking enquiry form.", tech: ["HTML", "CSS", "Vercel"], liveUrl: "https://casa-bajda.vercel.app/", codeUrl: "https://github.com/daemonttargaryen/casa-bajda" },
 ];
 
 const WHY = [
-  { icon: MapPin, label: "Malta-based", text: "I'm local. We can speak the same language, communicate in the same timezone, and I understand the Maltese culture." },
+  { icon: MapPin, label: "Malta-based", text: "I'm local. We can speak the same language, communicate in the same timezone, and I understand the culture." },
   { icon: Star, label: "Student rates", text: "No agency overheads. You're paying for the work itself, with no fluff." },
   { icon: Shield, label: "You own everything", text: "Your domain and website are registered entirely in your name. You will never be locked out." },
   { icon: Zap, label: "One person, full accountability", text: "You deal with me directly from the first message to the last. No handoffs or middlemen." },
@@ -516,11 +516,11 @@ export default function Portfolio() {
         <div style={{ maxWidth: "720px", marginTop: "4rem" }}>
           <div className="hero-line-1" style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.25)", borderRadius: "100px", padding: "5px 14px", marginBottom: "2rem" }}>
             <span className="dot-pulse" style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#3B82F6", display: "inline-block" }} />
-            <span style={{ fontSize: "13px", color: "#93C5FD", fontFamily: "'DM Mono', monospace" }}>Available for projects in Malta</span>
+            <span style={{ fontSize: "13px", color: "#93C5FD", fontFamily: "'DM Mono', monospace" }}>Available for projects</span>
           </div>
           <h1 className="hero-line-2" style={{ fontSize: "clamp(42px, 7vw, 72px)", fontWeight: 600, lineHeight: 1.08, letterSpacing: "-0.04em", marginBottom: "1.5rem" }}>
             I build websites<br />
-            <span style={{ color: "#3f3f46" }}>for local</span>{" "}
+            <span style={{ color: "#3f3f46" }}>for</span>{" "}
             <span style={{ color: ACCENT }}>businesses.</span>
           </h1>
           <p className="hero-line-3" style={{ fontSize: "18px", color: "#71717a", lineHeight: 1.7, maxWidth: "480px", marginBottom: "2.5rem", fontWeight: 300 }}>
@@ -558,7 +558,7 @@ export default function Portfolio() {
           <div>
             <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1.2, marginBottom: "1.5rem" }}>Hi, I'm Jake.</h2>
             <p style={{ color: "#71717a", lineHeight: 1.8, marginBottom: "1rem", fontWeight: 300 }}>
-              I'm a 22-year-old IT student studying my Bachelor's in Software Development. I build professional websites for local businesses, prioritising affordability, speed, and with no technical jargon.
+              I'm a 22-year-old IT student studying my Bachelor's in Software Development. I build professional websites, prioritising affordability, speed, and with no technical jargon.
             </p>
             <p style={{ color: "#71717a", lineHeight: 1.8, fontWeight: 300 }}>
               If you run a business that requires an online presence, my websites will help you get one, without breaking the bank or getting lost in the technical details. I handle everything from design to deployment, so you can focus on what you do best; running your business.
@@ -910,17 +910,17 @@ export default function Portfolio() {
             <form onSubmit={handleFormspreeSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
               <div>
                 <label style={{ fontSize: "13px", color: "#a1a1aa", display: "block", marginBottom: "6px" }}>Your name</label>
-                <input type="text" name="name" placeholder="Maria Borg" required style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "11px 14px", color: "#fafafa", fontSize: "14px", fontFamily: "inherit" }} />
+                <input type="text" name="name" placeholder="Name" required style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "11px 14px", color: "#fafafa", fontSize: "14px", fontFamily: "inherit" }} />
                 <ValidationError field="name" errors={formspree.errors} style={{ fontSize: "12px", color: "#EF4444", marginTop: "5px", display: "block" }} />
               </div>
               <div>
                 <label style={{ fontSize: "13px", color: "#a1a1aa", display: "block", marginBottom: "6px" }}>Email address</label>
-                <input type="email" name="email" placeholder="maria@example.com" required style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "11px 14px", color: "#fafafa", fontSize: "14px", fontFamily: "inherit" }} />
+                <input type="email" name="email" placeholder="name@example.com" required style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "11px 14px", color: "#fafafa", fontSize: "14px", fontFamily: "inherit" }} />
                 <ValidationError field="email" errors={formspree.errors} style={{ fontSize: "12px", color: "#EF4444", marginTop: "5px", display: "block" }} />
               </div>
               <div>
                 <label style={{ fontSize: "13px", color: "#a1a1aa", display: "block", marginBottom: "6px" }}>Business name (optional)</label>
-                <input type="text" name="business" placeholder="Bella Vista Restaurant" style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "11px 14px", color: "#fafafa", fontSize: "14px", fontFamily: "inherit" }} />
+                <input type="text" name="business" placeholder="Business Name" style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "11px 14px", color: "#fafafa", fontSize: "14px", fontFamily: "inherit" }} />
               </div>
               <div>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", marginBottom: "6px" }}>
@@ -944,7 +944,7 @@ export default function Portfolio() {
                   rows={4}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Tell me about your business and what you're looking for..."
+                  placeholder="Tell me what you're looking for..."
                   required
                   style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "11px 14px", color: "#fafafa", fontSize: "14px", fontFamily: "inherit", resize: "vertical" }}
                 />
